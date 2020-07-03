@@ -38,5 +38,8 @@ management:
 
 security:
   oauth:
+    client:
+      id: client_app
+      secrect: abcdef
     jwt:
       key: token_secrect_key
