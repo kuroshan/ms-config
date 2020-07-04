@@ -1,26 +1,24 @@
+server:
+  port: 8080
+
 spring:
   datasource:
-    url: jdbc:oracle:thin:@//localhost:1522/XE
-    username: hr
-    password: hrpw
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     database-platform: org.hibernate.dialect.Oracle10gDialect
-
-server:
-  port: 9091
-
-api:
-  support:
-    ms-human-resources-areas:
-      url: http://localhost:9092/ms-hr-areas/v1
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
 
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://microservice-discoveryserver:8761/eureka/
 
 hystrix:
   command:
@@ -46,6 +44,10 @@ hystrix:
           semaphore:
             maxConcurrentRequests: 100
 
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 5000
+
 management:
   endpoint:
     health:
@@ -61,3 +63,6 @@ management:
       base-path: /actuator
       cors:
         allowed-origins: true
+
+info:
+  environment: development

@@ -2,9 +2,11 @@ server:
   port: 9090
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://microservice-discoveryserver:8761/eureka/
 
 zuul:
   ignoredServices: '*'
@@ -30,6 +32,10 @@ zuul:
         - Cookie
         - Set-Cookie
 
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 5000
+
 management:
   endpoints:
     web:
@@ -38,8 +44,8 @@ management:
 
 security:
   oauth:
-    client:
-      id: client_app
-      secrect: abcdef
     jwt:
       key: token_secrect_key
+
+info:
+  environment: development
